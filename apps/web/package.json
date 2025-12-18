@@ -12,10 +12,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@notionhq/client": "^5.6.0",
     "@workspace/ui": "workspace:*",
+    "cheerio": "^1.1.2",
     "lucide-react": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
+    "notion-client": "^7.7.3",
+    "notion-types": "^7.7.3",
+    "notion-utils": "^7.7.3",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
