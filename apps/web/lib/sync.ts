@@ -6,11 +6,11 @@ export const syncAllApps = async () => {
     const data = await getPageData()
     const allItems = Object.values(data.items).flat()
 
+    let updatedCount = 0
     const results = []
 
     for (const item of allItems) {
-      if (item.appId) {
-        console.log(`Syncing app: ${item.title} (${item.appId})`)
+      if (item.appId && !item.title) {
         const appInfo = await fetchAppStoreInfo(item.appId)
 
         if (appInfo) {
@@ -20,6 +20,10 @@ export const syncAllApps = async () => {
             link: appInfo.url,
             logo: appInfo.logo
           })
+
+          if (success) {
+            updatedCount++
+          }
 
           results.push({
             id: item.id,
@@ -38,7 +42,7 @@ export const syncAllApps = async () => {
       }
     }
 
-    return results
+    return { results, updatedCount }
   } catch (error) {
     console.error('Error in syncAllApps:', error)
     throw error

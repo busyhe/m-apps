@@ -231,17 +231,22 @@ export const updateNotionApp = async (pageId: string, data: Partial<AppItem>) =>
     }
   }
 
-  if (data.logo) {
-    properties.logo = {
-      url: data.logo
-    }
-  }
-
   try {
-    await officialNotion.pages.update({
+    const updatePayload: any = {
       page_id: pageId,
       properties
-    })
+    }
+
+    if (data.logo) {
+      updatePayload.icon = {
+        type: 'external',
+        external: {
+          url: data.logo
+        }
+      }
+    }
+
+    await officialNotion.pages.update(updatePayload)
     return true
   } catch (error) {
     console.error(`Error updating Notion page ${pageId}:`, error)

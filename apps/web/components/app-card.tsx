@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRightIcon } from 'lucide-react'
+import { ArrowUpRightIcon, Image as ImageIcon } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription } from '@workspace/ui/components/card'
 import { Button } from '@workspace/ui/components/button'
 import { cn } from '@workspace/ui/lib/utils'
@@ -52,9 +52,7 @@ export function AppCard({ title, description, href, logo, category }: AppCardPro
                 />
               )
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
-                <span className="text-xs">No Logo</span>
-              </div>
+              <div className="w-5 h-5 bg-secondary rounded flex items-center justify-center" />
             )}
             <span>{title}</span>
           </div>

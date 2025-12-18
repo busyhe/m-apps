@@ -10,6 +10,8 @@ export interface AppStoreInfo {
 export const fetchAppStoreInfo = async (appId: string): Promise<AppStoreInfo | null> => {
   const url = `https://apps.apple.com/cn/app/${appId}`
 
+  console.debug('[DEBUG__lib/appstore.ts-url]', url)
+
   try {
     const response = await fetch(url, {
       headers: {
@@ -27,15 +29,12 @@ export const fetchAppStoreInfo = async (appId: string): Promise<AppStoreInfo | n
     const html = await response.text()
     const $ = cheerio.load(html)
 
-    // Extracting information
-    const name =
-      $('meta[property="og:title"]').attr('content')?.split(' - ')[0] || $('.product-header__title').text().trim() || ''
-
-    // Description often needs cleanup
-    const description =
-      $('meta[name="description"]').attr('content') || $('.section__description .we-truncate').text().trim() || ''
-
-    const logo = $('meta[property="og:image"]').attr('content') || $('.product-header__artwork img').attr('src') || ''
+    const name = $('.content-container h1').text().trim()
+    const description = $('.content-container .subtitle').text().trim()
+    const logo =
+      $('.content-container picture source').attr('srcset')?.split(' ')[0] ||
+      $('.content-container picture img').attr('src') ||
+      ''
 
     return {
       name,
