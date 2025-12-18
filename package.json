@@ -1,0 +1,38 @@
+{
+  "name": "nextjs-starter",
+  "private": true,
+  "version": "0.3.2",
+  "scripts": {
+    "build": "turbo build",
+    "changeset": "pnpm exec changeset",
+    "clean": "node ./scripts/clean.mjs",
+    "commit": "czg",
+    "dev": "turbo dev",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo lint",
+    "prepare": "git config --local core.editor cat",
+    "release": "LEFTHOOK=0 bumpp package.json apps/*/package.json --all"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "bumpp": "catalog:",
+    "czg": "catalog:",
+    "lefthook": "catalog:",
+    "prettier": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "core-js-pure",
+      "lefthook",
+      "sharp"
+    ]
+  }
+}
