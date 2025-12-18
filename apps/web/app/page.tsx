@@ -2,11 +2,14 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { AppContent } from '@/components/app-content'
 import { Suspense } from 'react'
+import { getPageData } from '@/lib/notion'
 
-export default function Page() {
+export default async function Page() {
+  const pageData = await getPageData()
+
   return (
     <div data-wrapper="" className="border-grid flex flex-1 flex-col min-h-svh bg-[#FAFAFA] dark:bg-[#050505]">
-      <SiteHeader />
+      <SiteHeader title={pageData.title} icon={pageData.icon} />
       <main className="flex flex-1 flex-col container-wrapper">
         <div className="container py-12 px-4 md:px-6">
           <Suspense

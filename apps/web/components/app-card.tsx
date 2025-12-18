@@ -13,13 +13,27 @@ interface AppCardProps {
   category: string
 }
 
+const isEmoji = (str: string) => {
+  return /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{1F004}\u{1F0CF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{3030}\u{2B50}\u{2B55}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{3297}\u{3299}\u{303D}\u{00A9}\u{00AE}\u{2122}\u{23F3}\u{24C2}\u{23E9}-\u{23EF}\u{25B6}\u{23F8}-\u{23FA}]/u.test(
+    str
+  )
+}
+
 export function AppCard({ title, description, href, logo, category }: AppCardProps) {
+  const isLogoEmoji = logo && (isEmoji(logo) || logo.length <= 2)
+
   return (
     <div className="group relative flex flex-col p-5 bg-card hover:bg-accent/50 transition-all rounded-3xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 overflow-hidden">
       <div className="flex items-start justify-between mb-4">
-        <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-inner bg-muted shrink-0">
+        <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-inner bg-muted shrink-0 flex items-center justify-center">
           {logo ? (
-            <Image src={logo} alt={title} fill className="object-cover" unoptimized />
+            isLogoEmoji ? (
+              <span className="text-3xl" role="img" aria-label="icon">
+                {logo}
+              </span>
+            ) : (
+              <Image src={logo} alt={title} fill className="object-cover" unoptimized />
+            )
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
               <span className="text-xs">No Logo</span>

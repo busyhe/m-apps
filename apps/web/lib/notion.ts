@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NotionAPI } from 'notion-client'
-import { idToUuid, getPageTitle, defaultMapImageUrl } from 'notion-utils'
+import { idToUuid, getPageTitle, defaultMapImageUrl, getBlockIcon } from 'notion-utils'
 import { cache } from 'react'
 import { Client } from '@notionhq/client'
 
@@ -56,13 +56,39 @@ export default function getAllPageIds(
 }
 
 // Helper function to map Notion image URLs
-function mapNotionImageUrl(url: string, block: any) {
+export function mapNotionImageUrl(url: string, block: any, recordMap?: any) {
   if (!url) return ''
-  return defaultMapImageUrl(url, block) || ''
+  if (url.startsWith('data:')) return url
+  if (url.startsWith('https://www.notion.so/image/')) return url
+
+  // 1. Try to see if it's already in signed_urls
+  if (recordMap?.signed_urls?.[url]) {
+    return recordMap.signed_urls[url]
+  }
+
+  // 2. Use default mapping
+  let mappedUrl = defaultMapImageUrl(url, block) || url
+
+  // 3. Handle relative paths
+  if (mappedUrl.startsWith('/image')) {
+    mappedUrl = `https://www.notion.so${mappedUrl}`
+  }
+
+  // 4. Handle attachment: if mapping failed or needs specific table info
+  if (url.startsWith('attachment:')) {
+    const table = block.type === 'collection' ? 'collection' : 'block'
+    const id = block.id
+    console.debug('[DEBUG__lib/notion.ts-mappedUrl]', mappedUrl)
+    if (!mappedUrl.includes('table=') || mappedUrl.includes('table=undefined')) {
+      mappedUrl = `https://www.notion.so/image/${encodeURIComponent(url)}?table=${table}&id=${id}&cache=v2`
+    }
+  }
+
+  return mappedUrl
 }
 
 // Helper function to get page properties
-function getPageProperties(pageId: string, value: any, schema: any) {
+function getPageProperties(pageId: string, value: any, schema: any, recordMap?: any) {
   if (!value || !schema) return null
 
   const propertyMap: Record<string, any> = {}
@@ -76,9 +102,8 @@ function getPageProperties(pageId: string, value: any, schema: any) {
     }
   })
 
-  // Prioritize cover from format.page_cover
-  const cover = value.format?.page_cover ? mapNotionImageUrl(value.format.page_cover, value) : ''
-  const icon = value.format?.page_icon || ''
+  // Use getBlockIcon for more robust icon extraction (handles emojis, external, etc.)
+  const icon = getBlockIcon(value, recordMap) || ''
 
   return {
     id: pageId,
@@ -86,7 +111,7 @@ function getPageProperties(pageId: string, value: any, schema: any) {
     title: propertyMap.title || propertyMap.name || '',
     desc: propertyMap.desc || propertyMap.description || '',
     link: propertyMap.link || propertyMap.url || '',
-    logo: cover || propertyMap.logo || propertyMap.icon || icon || '',
+    logo: icon ? mapNotionImageUrl(icon, value, recordMap) : '',
     type: propertyMap.type || propertyMap.category || 'other'
   }
 }
@@ -104,6 +129,7 @@ export interface AppItem {
 export interface PageData {
   title: string
   description: string
+  icon: string
   items: Record<string, AppItem[]>
 }
 
@@ -132,6 +158,7 @@ const getPageDataInternal = async (): Promise<PageData> => {
 
     const title = getPageTitle(recordMap) || 'App Navigation'
     const description = rawMetadata?.format?.seo_description || ''
+    const rawIcon = getBlockIcon(rawMetadata, recordMap) || ''
 
     const pageGroups = getAllPageIds(collectionQuery, collectionId || '', collectionView, viewIds || [])
 
@@ -152,16 +179,18 @@ const getPageDataInternal = async (): Promise<PageData> => {
           const value = blockItem.value
           if (!value) return
 
-          const props = getPageProperties(id, value, schema)
+          const props = getPageProperties(id, value, schema, recordMap)
           if (!props) return
 
           itemsByGroup[groupTitle]!.push(props as AppItem)
         })
       })
 
+    console.debug('[DEBUG__lib/notion.ts-collectionId]', collectionId)
     return {
       title,
       description,
+      icon: rawIcon ? mapNotionImageUrl(rawIcon, { id: collectionId, type: 'collection' }, recordMap) : '',
       items: itemsByGroup
     }
   } catch (error) {
