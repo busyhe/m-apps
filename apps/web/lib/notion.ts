@@ -5,6 +5,8 @@ import { unstable_cache } from 'next/cache'
 import { Client } from '@notionhq/client'
 
 // Initialize the Notion client for fetching (unofficial)
+export const IS_SYNC_ENABLED = !!process.env.NOTION_TOKEN
+
 const notion = new NotionAPI({
   authToken: process.env.NOTION_TOKEN,
   userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone

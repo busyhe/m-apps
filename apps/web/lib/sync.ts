@@ -1,7 +1,12 @@
-import { getPageData, updateNotionApp } from './notion'
+import { getPageData, updateNotionApp, IS_SYNC_ENABLED } from './notion'
 import { fetchAppStoreInfo } from './appstore'
 
 export const syncAllApps = async () => {
+  if (!IS_SYNC_ENABLED) {
+    console.log('Sync is disabled: NOTION_TOKEN is missing')
+    return { results: [], updatedCount: 0, message: 'Sync is disabled' }
+  }
+
   try {
     const data = await getPageData()
     const allItems = Object.values(data.items).flat()
