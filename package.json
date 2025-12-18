@@ -1,7 +1,7 @@
 {
   "name": "m-apps",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "turbo build",
     "changeset": "pnpm exec changeset",
