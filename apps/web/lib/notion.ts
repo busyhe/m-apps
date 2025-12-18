@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NotionAPI } from 'notion-client'
 import { idToUuid, getPageTitle, defaultMapImageUrl, getBlockIcon } from 'notion-utils'
-import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
 import { Client } from '@notionhq/client'
 
 // Initialize the Notion client for fetching (unofficial)
@@ -199,7 +199,16 @@ const getPageDataInternal = async (): Promise<PageData> => {
   }
 }
 
-export const getPageData = cache(getPageDataInternal)
+export const getPageData = unstable_cache(
+  async () => {
+    return getPageDataInternal()
+  },
+  ['notion-page-data'],
+  {
+    revalidate: 3600, // Cache for 1 hour
+    tags: ['notion-page-data']
+  }
+)
 
 // Function to update Notion record with App Store data
 export const updateNotionApp = async (pageId: string, data: Partial<AppItem>) => {
