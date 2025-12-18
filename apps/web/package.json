@@ -14,6 +14,7 @@
   "dependencies": {
     "@notionhq/client": "^5.6.0",
     "@workspace/ui": "workspace:*",
+    "@next/third-parties": "catalog:",
     "cheerio": "^1.1.2",
     "lucide-react": "catalog:",
     "next": "catalog:",

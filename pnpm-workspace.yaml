@@ -3,16 +3,17 @@ packages:
   - packages/*
 
 catalog:
-  '@eslint/js': ^9.39.1
-  '@next/eslint-plugin-next': ^16.0.7
-  '@radix-ui/react-slot': ^1.2.4
-  '@tailwindcss/postcss': ^4.1.17
-  '@turbo/gen': ^2.6.3
-  '@types/node': ^24.10.1
-  '@types/react': ^19.2.7
-  '@types/react-dom': ^19.2.3
-  '@typescript-eslint/eslint-plugin': ^8.48.1
-  '@typescript-eslint/parser': ^8.48.1
+  "@eslint/js": ^9.39.1
+  "@next/eslint-plugin-next": ^16.0.7
+  "@next/third-parties": ^15.3.4
+  "@radix-ui/react-slot": ^1.2.4
+  "@tailwindcss/postcss": ^4.1.17
+  "@turbo/gen": ^2.6.3
+  "@types/node": ^24.10.1
+  "@types/react": ^19.2.7
+  "@types/react-dom": ^19.2.3
+  "@typescript-eslint/eslint-plugin": ^8.48.1
+  "@typescript-eslint/parser": ^8.48.1
   bumpp: ^10.3.2
   class-variance-authority: ^0.7.1
   clsx: ^2.1.1

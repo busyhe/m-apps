@@ -78,7 +78,6 @@ export function mapNotionImageUrl(url: string, block: any, recordMap?: any) {
   if (url.startsWith('attachment:')) {
     const table = block.type === 'collection' ? 'collection' : 'block'
     const id = block.id
-    console.debug('[DEBUG__lib/notion.ts-mappedUrl]', mappedUrl)
     if (!mappedUrl.includes('table=') || mappedUrl.includes('table=undefined')) {
       mappedUrl = `https://www.notion.so/image/${encodeURIComponent(url)}?table=${table}&id=${id}&cache=v2`
     }
@@ -186,7 +185,6 @@ const getPageDataInternal = async (): Promise<PageData> => {
         })
       })
 
-    console.debug('[DEBUG__lib/notion.ts-collectionId]', collectionId)
     return {
       title,
       description,
