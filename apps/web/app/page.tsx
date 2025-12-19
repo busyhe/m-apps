@@ -4,8 +4,9 @@ import { AppContent } from '@/components/app-content'
 import { getPageData } from '@/lib/notion'
 import { syncAllApps } from '@/lib/sync'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
-  // Trigger background sync if needed
   await syncAllApps()
 
   const pageData = await getPageData()
