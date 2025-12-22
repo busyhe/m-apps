@@ -20,7 +20,7 @@ export function SiteHeader({ title, icon }: SiteHeaderProps) {
           <MainNav title={title} icon={icon} />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
             <nav className="flex items-center gap-0.5">
-              <Search />
+              <Search className="mr-2" />
               <Button asChild variant="ghost" size="icon" className="h-8 w-8 px-0">
                 <Link href={siteConfig.url} target="_blank" rel="noreferrer">
                   <Github className="size-4" />

@@ -20,7 +20,7 @@ export function MainNav({ title, icon }: MainNavProps) {
   const isIconEmoji = icon && (isEmoji(icon) || icon.length <= 2)
 
   return (
-    <div className="mr-4 hidden md:flex">
+    <div className="mr-4 md:flex">
       <Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
         {icon ? (
           <div className="size-6 flex items-center justify-center shrink-0">
@@ -37,7 +37,7 @@ export function MainNav({ title, icon }: MainNavProps) {
         ) : (
           <Logo className="size-6 rounded-sm shrink-0" />
         )}
-        <span className="hidden font-bold lg:inline-block">{title || siteConfig.name}</span>
+        <span className="hidden font-bold md:inline-block">{title || siteConfig.name}</span>
       </Link>
     </div>
   )

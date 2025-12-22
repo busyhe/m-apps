@@ -3,12 +3,13 @@
 import { Input } from '@workspace/ui/components/input'
 import { SearchIcon } from 'lucide-react'
 import { useSearchContext } from '../search-context'
+import { cn } from '@workspace/ui/lib/utils'
 
-export function Search() {
+export function Search({ className }: { className?: string }) {
   const { searchQuery, setSearchQuery } = useSearchContext()
 
   return (
-    <div className="relative flex items-center gap-2">
+    <div className={cn('relative flex items-center gap-2', className)}>
       <Input
         type="text"
         placeholder="Search"
