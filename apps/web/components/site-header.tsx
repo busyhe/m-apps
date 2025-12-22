@@ -5,6 +5,7 @@ import { MainNav } from '@/components/header/main-nav'
 import { ModeSwitcher } from '@/components/header/mode-switcher'
 import { Button } from '@workspace/ui/components/button'
 import { Github } from 'lucide-react'
+import { Search } from './header/Search'
 
 interface SiteHeaderProps {
   title?: string
@@ -19,6 +20,7 @@ export function SiteHeader({ title, icon }: SiteHeaderProps) {
           <MainNav title={title} icon={icon} />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
             <nav className="flex items-center gap-0.5">
+              <Search />
               <Button asChild variant="ghost" size="icon" className="h-8 w-8 px-0">
                 <Link href={siteConfig.url} target="_blank" rel="noreferrer">
                   <Github className="size-4" />
