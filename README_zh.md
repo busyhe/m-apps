@@ -59,9 +59,22 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 最简单的部署方式是使用 [Vercel 平台](https://vercel.com/new)。
 
-1. 将你的 GitHub 仓库连接到 Vercel。
-2. 配置环境变量 (`NOTION_PAGE_ID`, `NOTION_TOKEN`)。
-3. 点击部署！
+1. 复制此 Notion 模板
+
+   [Notion 导航演示页面](https://busyhe.notion.site/2cdbba2b2ae780f08320cf66752e5082?v=2cdbba2b2ae781888351000ce04cbd87)
+
+2. 点击下方按钮进行部署：
+
+   [![使用 Vercel 部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbusyhe%2Fm-apps)
+
+3. 配置环境变量：
+   - 将 `NOTION_PAGE_ID` 设置为你的 Notion 页面 ID
+   - 将 `NEXT_PUBLIC_GA_ID` 设置为你的 Google Analytics ID (可选)
+   - 将 `NOTION_TOKEN` 设置为你的 Notion 内部集成令牌 (将数据同步回 Notion 所需)
+   - 将 `APPSTORE_REGIONS` 设置为你想要获取数据的区域 (可选)
+4. 部署并开启你的导航网站！
+
+你也可以通过推送到连接了 Vercel 的 GitHub 仓库来进行手动部署。
 
 ## 开源协议
 

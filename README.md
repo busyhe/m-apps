@@ -57,11 +57,24 @@ Your Notion database should include the following properties for optimal perform
 
 ### Deploy on Vercel
 
-The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new).
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
 
-1. Connect your GitHub repository to Vercel.
-2. Configure the environment variables (`NOTION_PAGE_ID`, `NOTION_TOKEN`).
-3. Deploy!
+1. Duplicate this Notion template
+
+   [Notion nav demo page](https://busyhe.notion.site/2cdbba2b2ae780f08320cf66752e5082?v=2cdbba2b2ae781888351000ce04cbd87)
+
+2. Click the button below to deploy:
+
+   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbusyhe%2Fm-apps)
+
+3. Configure environment variables:
+   - Set `NOTION_PAGE_ID` to your Notion page ID
+   - Set `NEXT_PUBLIC_GA_ID` to your Google Analytics ID (optional)
+   - Set `NOTION_TOKEN` to your Notion Internal Integration Token (required for syncing data back to Notion)
+   - Set `APPSTORE_REGIONS` to the regions you want to fetch data from (optional)
+4. Deploy and enjoy your navigation site!
+
+You can also manually deploy by pushing to your Vercel-connected GitHub repository.
 
 ## License
 
