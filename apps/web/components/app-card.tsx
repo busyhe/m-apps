@@ -45,14 +45,14 @@ export function AppCard({ title, description, href, logo, category }: AppCardPro
                 <Image
                   src={logo}
                   alt={title}
-                  width={20}
-                  height={20}
+                  width={28}
+                  height={28}
                   className="object-cover overflow-hidden shrink-0"
                   unoptimized
                 />
               )
             ) : (
-              <div className="w-5 h-5 bg-secondary rounded flex items-center justify-center" />
+              <div className="w-7 h-7 bg-secondary rounded flex items-center justify-center" />
             )}
             <span>{title}</span>
           </div>
