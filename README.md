@@ -4,6 +4,8 @@ English | [简体中文](./README_zh.md)
 
 A navigation site that displays apps from a Notion database, featuring automatic data enrichment from the Apple App Store. Built with Next.js 15.
 
+![M-Nav Example](https://github.com/busyhe/m-apps/blob/main/example.png)
+
 ## Features
 
 - **Notion Integration**: Uses a Notion database as a CMS for easy management.

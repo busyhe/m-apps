@@ -4,6 +4,8 @@
 
 这是一个从 Notion 数据库获取应用信息并展示的导航网站，支持从 Apple App Store 自动同步应用元数据。基于 Next.js 15 构建。
 
+![M-Nav Example](https://github.com/busyhe/m-apps/blob/main/example.png)
+
 ## 特性
 
 - **Notion 集成**: 使用 Notion 数据库作为内容管理系统 (CMS)，方便快捷。
