@@ -35,11 +35,13 @@ pnpm install
 NOTION_PAGE_ID=your_notion_page_id
 NOTION_TOKEN=your_notion_integration_token
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_SHOW_COUNT=true
 ```
 
 - **NOTION_PAGE_ID**: 包含应用数据库的 Notion 页面 ID。
 - **NOTION_TOKEN**: Notion 内部集成令牌 (Internal Integration Token)，用于将数据同步回 Notion。
 - **NEXT_PUBLIC_GA_ID**: Google Analytics 跟踪 ID (可选)。
+- **NEXT_PUBLIC_SHOW_COUNT**: 显示应用数量徽标（默认：`true`，设为 `false` 可隐藏）。
 
 ## Notion 数据库结构
 

@@ -10,10 +10,11 @@ export default async function Page() {
   await syncAllApps()
 
   const pageData = await getPageData()
+  const appsCount = Object.values(pageData.items).reduce((acc, items) => acc + items.length, 0)
 
   return (
     <div data-wrapper="" className="border-grid flex flex-1 flex-col min-h-svh">
-      <SiteHeader title={pageData.title} icon={pageData.icon} />
+      <SiteHeader title={pageData.title} icon={pageData.icon} appsCount={appsCount} />
       <main className="flex flex-1 flex-col container-wrapper p-4">
         <AppContent pageData={pageData} />
       </main>

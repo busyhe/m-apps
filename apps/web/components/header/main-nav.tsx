@@ -8,6 +8,7 @@ import Image from 'next/image'
 interface MainNavProps {
   title?: string
   icon?: string
+  appsCount?: number
 }
 
 const isEmoji = (str: string) => {
@@ -16,7 +17,7 @@ const isEmoji = (str: string) => {
   )
 }
 
-export function MainNav({ title, icon }: MainNavProps) {
+export function MainNav({ title, icon, appsCount }: MainNavProps) {
   const isIconEmoji = icon && (isEmoji(icon) || icon.length <= 2)
 
   return (
@@ -37,7 +38,12 @@ export function MainNav({ title, icon }: MainNavProps) {
         ) : (
           <Logo className="size-6 rounded-sm shrink-0" />
         )}
-        <span className="hidden font-bold md:inline-block">{title || siteConfig.name}</span>
+        <span className="hidden font-bold md:inline-block">
+          {title || siteConfig.name}
+          {process.env.NEXT_PUBLIC_SHOW_COUNT !== 'false' && appsCount !== undefined && (
+            <sup className="text-xs text-muted-foreground ml-1">{appsCount}</sup>
+          )}
+        </span>
       </Link>
     </div>
   )

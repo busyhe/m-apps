@@ -35,11 +35,13 @@ pnpm install
 NOTION_PAGE_ID=your_notion_page_id
 NOTION_TOKEN=your_notion_integration_token
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_SHOW_COUNT=true
 ```
 
 - **NOTION_PAGE_ID**: The ID of the Notion page containing your apps database.
 - **NOTION_TOKEN**: Your Notion Internal Integration Token (required for syncing data back to Notion).
 - **NEXT_PUBLIC_GA_ID**: Your Google Analytics Measurement ID (optional).
+- **NEXT_PUBLIC_SHOW_COUNT**: Show app count badges (default: `true`, set to `false` to hide).
 
 ## Notion Database Structure
 
