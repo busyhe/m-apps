@@ -44,29 +44,34 @@ export const AppContent = ({ pageData }: { pageData: PageData }) => {
 
   return (
     <>
-      {Object.entries(filteredItems).map(([groupTitle, items]) => (
-        <section key={groupTitle} className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 capitalize">
-            {groupTitle}
-            {process.env.NEXT_PUBLIC_SHOW_COUNT !== 'false' && (
-              <sup className="text-xs text-muted-foreground ml-1">{items.length}</sup>
-            )}
-          </h2>
+      {Object.entries(filteredItems).map(([groupTitle, items]) => {
+        const anchorId = groupTitle.toLowerCase().replace(/\s+/g, '-')
+        return (
+          <section key={groupTitle} id={anchorId} className="mb-8 scroll-mt-20">
+            <h2 className="text-xl font-semibold mb-4 capitalize group">
+              <a href={`#${anchorId}`} className="hover:underline">
+                {groupTitle}
+              </a>
+              {process.env.NEXT_PUBLIC_SHOW_COUNT !== 'false' && (
+                <sup className="text-xs text-muted-foreground ml-1">{items.length}</sup>
+              )}
+            </h2>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {items.map((item) => (
-              <AppCard
-                key={item.id}
-                title={item.title}
-                description={item.desc}
-                href={item.link}
-                logo={item.logo}
-                category={item.type}
-              />
-            ))}
-          </div>
-        </section>
-      ))}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {items.map((item) => (
+                <AppCard
+                  key={item.id}
+                  title={item.title}
+                  description={item.desc}
+                  href={item.link}
+                  logo={item.logo}
+                  category={item.type}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      })}
     </>
   )
 }
