@@ -3,6 +3,7 @@ import { NotionAPI } from 'notion-client'
 import { idToUuid, getPageTitle, defaultMapImageUrl, getBlockIcon } from 'notion-utils'
 import { cache } from 'react'
 import { Client } from '@notionhq/client'
+import { ExtendedRecordMap } from 'notion-types'
 
 // Initialize the Notion client for fetching (unofficial)
 export const IS_SYNC_ENABLED = !!process.env.NOTION_TOKEN
@@ -134,6 +135,45 @@ export interface PageData {
   items: Record<string, AppItem[]>
 }
 
+export function normalizeRecordMap(recordMap: ExtendedRecordMap): void {
+  // Normalize blocks
+  for (const blockId of Object.keys(recordMap.block)) {
+    const entry = recordMap.block[blockId] as any
+    if (
+      entry?.value &&
+      typeof entry.value === 'object' &&
+      entry.value.value &&
+      typeof entry.value.value === 'object' &&
+      entry.value.value.id
+    ) {
+      // Double-nested: flatten { value: { value: {...}, role }, spaceId } → { value: {...}, role }
+      recordMap.block[blockId] = {
+        value: entry.value.value,
+        role: entry.value.role ?? entry.role ?? 'reader'
+      } as any
+    }
+  }
+
+  // Normalize collections (same pattern can occur)
+  if (recordMap.collection) {
+    for (const collectionId of Object.keys(recordMap.collection)) {
+      const entry = recordMap.collection[collectionId] as any
+      if (
+        entry?.value &&
+        typeof entry.value === 'object' &&
+        entry.value.value &&
+        typeof entry.value.value === 'object' &&
+        entry.value.value.id
+      ) {
+        recordMap.collection[collectionId] = {
+          value: entry.value.value,
+          role: entry.value.role ?? entry.role ?? 'reader'
+        } as any
+      }
+    }
+  }
+}
+
 const getPageDataInternal = async (): Promise<PageData> => {
   if (!process.env.NOTION_PAGE_ID) {
     throw new Error('NOTION_PAGE_ID is not defined in environment variables')
@@ -147,6 +187,8 @@ const getPageDataInternal = async (): Promise<PageData> => {
       fetchCollections: true,
       fetchMissingBlocks: true
     })
+
+    normalizeRecordMap(recordMap)
 
     const collection = Object.values(recordMap.collection)[0]?.value
     const collectionQuery = recordMap.collection_query
